@@ -11,20 +11,6 @@ public class Loan {
   private Date expiry;
   private CapitalStrategy capitalStrategy;
 
-  public Loan(double commitment, int riskRating, Date maturity, Date expiry) {
-    this(commitment, 0.00, riskRating, maturity, expiry);
-  }
-
-  public Loan(double commitment, double outstanding, int riskRating, Date maturity,
-      Date expiry) {
-    this(null, commitment, outstanding, riskRating, maturity, expiry);
-  }
-
-  public Loan(CapitalStrategy capitalStrategy, double commitment, int riskRating, Date maturity,
-      Date expiry) {
-    this(capitalStrategy, commitment, 0.00, riskRating, maturity, expiry);
-  }
-
   public Loan(CapitalStrategy capitalStrategy, double commitment, double outstanding,
       int riskRating, Date maturity, Date expiry) {
     this.commitment = commitment;
@@ -45,6 +31,34 @@ public class Loan {
   }
 
   public static Loan createTermLoan(double commitment, int riskRating, Date maturity) {
-    return new Loan(commitment, 0.00, riskRating, maturity, null);
+    return new Loan(null, commitment, 0.00, riskRating, maturity, null);
   }
+
+  public static Loan createTermLoan(CapitalStrategy capitalStrategy, double commitment, int riskRating,
+      Date maturity) {
+    return new Loan(capitalStrategy, commitment, 0.00, riskRating, maturity, null);
+  }
+
+  public static Loan createRevolver(double commitment, double outstanding, int riskRating,
+      Date maturity) {
+    return new Loan(null, commitment, outstanding, riskRating, maturity, null);
+  }
+
+  public static Loan createRevolver(CapitalStrategy capitalStrategy, double commitment,
+      double outstanding, int riskRating, Date maturity) {
+    return new Loan(capitalStrategy, commitment, outstanding, riskRating,
+        maturity, null);
+  }
+
+  public static Loan createRCTL(double commitment, double outstanding, int riskRating, Date maturity,
+      Date expiry) {
+    return new Loan(null, commitment, outstanding, riskRating, maturity, expiry);
+  }
+
+  public static Loan createRCTL(CapitalStrategy capitalStrategy, double commitment,
+      double outstanding, int riskRating, Date maturity, Date expiry) {
+    return new Loan(capitalStrategy, commitment, outstanding, riskRating,
+        maturity, expiry);
+  }
+
 }
