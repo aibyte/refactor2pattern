@@ -1,5 +1,7 @@
 package com.aibyte.arch.pattern.creation.loan;
 
+import static com.aibyte.arch.pattern.creation.loan.Loan.createRCTL;
+import static com.aibyte.arch.pattern.creation.loan.Loan.createRevolver;
 import static com.aibyte.arch.pattern.creation.loan.Loan.createTermLoan;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
@@ -22,7 +24,9 @@ class CapitalCalculationTests {
     double commitment = 1000.0;
     int riskRating = 2;
     Date maturity = new Date();
-    Loan termLoan = new Loan(new CapitalStrategyTermLoan(), commitment, riskRating, maturity, null);
+    CapitalStrategy capitalStrategy = new CapitalStrategyTermLoan();
+    Loan termLoan = createTermLoan(capitalStrategy, commitment,
+        riskRating, maturity);
     assertNotNull(termLoan);
   }
 
@@ -32,7 +36,8 @@ class CapitalCalculationTests {
     double outstanding = 1.0;
     int riskRating = 2;
     Date maturity = new Date();
-    Loan revolverLoan = new Loan(commitment, outstanding, riskRating, maturity, null);
+    Loan revolverLoan = createRevolver(commitment, outstanding,
+        riskRating, maturity);
     assertNotNull(revolverLoan);
   }
 
@@ -42,8 +47,9 @@ class CapitalCalculationTests {
     double outstanding = 1.0;
     int riskRating = 2;
     Date maturity = new Date();
-    Loan revolverLoan = new Loan(new CapitalStrategyRevolver(), commitment, outstanding, riskRating,
-        maturity, null);
+    CapitalStrategy capitalStrategy = new CapitalStrategyRevolver();
+    Loan revolverLoan = createRevolver(capitalStrategy, commitment,
+        outstanding, riskRating, maturity);
     assertNotNull(revolverLoan);
   }
 
@@ -54,9 +60,11 @@ class CapitalCalculationTests {
     int riskRating = 2;
     Date maturity = new Date();
     Date expiry = new Date();
-    Loan rctlLoan = new Loan(commitment, outstanding, riskRating, maturity, expiry);
+    Loan rctlLoan = createRCTL(commitment, outstanding, riskRating,
+        maturity, expiry);
     assertNotNull(rctlLoan);
   }
+
 
   @Test
   void should_pass_rctl_loan_with_risk_adjusted_capital_strategy() {
@@ -65,8 +73,9 @@ class CapitalCalculationTests {
     int riskRating = 2;
     Date maturity = new Date();
     Date expiry = new Date();
-    Loan rctlLoan = new Loan(new CapitalStrategyRCTL(), commitment, outstanding, riskRating,
-        maturity, expiry);
+    CapitalStrategy capitalStrategy = new CapitalStrategyRCTL();
+    Loan rctlLoan = createRCTL(capitalStrategy, commitment,
+        outstanding, riskRating, maturity, expiry);
     assertNotNull(rctlLoan);
   }
 }
