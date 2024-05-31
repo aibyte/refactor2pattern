@@ -1,5 +1,6 @@
 package com.aibyte.arch.pattern.creation.loan;
 
+import static com.aibyte.arch.pattern.creation.loan.Loan.createTermLoan;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 import java.util.Date;
@@ -12,7 +13,7 @@ class CapitalCalculationTests {
     double commitment = 1000.0;
     int riskRating = 2;
     Date maturity = new Date();
-    Loan termLoan = new Loan(commitment, riskRating, maturity);
+    Loan termLoan = createTermLoan(commitment, riskRating, maturity);
     assertNotNull(termLoan);
   }
 
