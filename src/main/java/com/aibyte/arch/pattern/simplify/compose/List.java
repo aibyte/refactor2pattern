@@ -1,6 +1,8 @@
 package com.aibyte.arch.pattern.simplify.compose;
 
 public class List {
+
+  public static final int GROWTH_INCREMENT = 10;
   private boolean readOnly;
   private int size;
   private Object[] elements;
@@ -16,19 +18,33 @@ public class List {
     elements = new Object[INIT_SIZE];
   }
 
-  public void add (Object element) {
+  public void add(Object element) {
     // add element to list
-    if (!readOnly) {
-      int newSize = size + 1;
-      if (newSize > elements.length) {
-        Object[] newElements = new Object[elements.length + 10];
-        for (int i = 0; i < size; i++) {
-          newElements[i] = elements[i];
-        }
-        elements = newElements;
-      }
-      elements[size++] = element;
+    // Guard clause
+    if (readOnly) {
+      return;
     }
+
+    if (atCapacity()) {
+      grow();
+    }
+    addElement(element);
+
+  }
+
+  private void addElement(Object element) {
+    elements[size++] = element;
+  }
+
+  private void grow() {
+    Object[] newElements = new Object[elements.length + GROWTH_INCREMENT];
+    if (size >= 0)
+      System.arraycopy(elements, 0, newElements, 0, size);
+    elements = newElements;
+  }
+
+  private boolean atCapacity() {
+    return size + 1 > elements.length;
   }
 
 }
