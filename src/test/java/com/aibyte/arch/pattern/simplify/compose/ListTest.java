@@ -20,10 +20,19 @@ class ListTest {
   }
 
   @Test
-  void should_pass_add_element() {
+  void should_pass_add_one_element() {
     List list = new List();
     list.add("element");
     assertEquals(1, list.getSize());
+  }
+
+  @Test
+  void should_pass_add_multiple_elements() {
+    List list = new List();
+    list.add("element1");
+    list.add("element2");
+    list.add("element3");
+    assertEquals(3, list.getSize());
   }
 
 }
