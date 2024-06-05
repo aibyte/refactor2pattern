@@ -51,12 +51,10 @@ public class OrdersWriter {
   }
 
   private void writePriceTo(StringBuffer xml, Product product) {
-    xml.append("<price");
-    xml.append(" currency='");
-    xml.append(currencyFor(product));
-    xml.append("'>");
-    xml.append(product.getPrice());
-    xml.append("</price>");
+    TagNode priceNode = new TagNode("price");
+    priceNode.addAttribute("currency", currencyFor(product));
+    priceNode.addValue(String.valueOf(product.getPrice()));
+    xml.append(priceNode.toString());
   }
 
   private String currencyFor(Product product) {
