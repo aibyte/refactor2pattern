@@ -15,46 +15,40 @@ public class OrdersWriter {
   }
 
   private void writeOrderTo(StringBuffer xml) {
-    xml.append("<orders>");
+    TagNode ordersNode = new TagNode("orders");
     for (int i = 0; i < orders.getOrderCount(); i++) {
       Order order = orders.getOrder(i);
-      xml.append("<order");
-      xml.append(" id='");
-      xml.append(order.getOrderId());
-      xml.append("'>");
-      writeProductsTo(xml, order);
-      xml.append("</order>");
+      TagNode orderNode = new TagNode("order");
+      orderNode.addAttribute("id", String.valueOf(order.getOrderId()));
+      writeProductsTo(orderNode, order);
+      ordersNode.add(orderNode);
     }
-    xml.append("</orders>");
+    xml.append(ordersNode);
   }
 
-  private void writeProductsTo(StringBuffer xml, Order order) {
+  private void writeProductsTo(TagNode orderNode, Order order) {
     for (int j = 0; j < order.getProductCount(); j++) {
       Product product = order.getProduct(j);
-      xml.append("<product");
-      xml.append(" id='");
-      xml.append(product.getId());
-      xml.append("'");
-      xml.append(" color='");
-      xml.append(colorFor(product));
-      xml.append("'");
+
+      TagNode productNode = new TagNode("product");
+      productNode.addAttribute("id", String.valueOf(product.getId()));
+      productNode.addAttribute("color", colorFor(product));
       if (product.getSize() != Product.SIZE_NOT_APPLICABLE) {
-        xml.append(" size='");
-        xml.append(sizeFor(product));
-        xml.append("'");
+        productNode.addAttribute("size", String.valueOf(sizeFor(product)));
       }
-      xml.append(">");
-      writePriceTo(xml, product);
-      xml.append(product.getName());
-      xml.append("</product>");
+
+      writePriceTo(productNode, product);
+      productNode.addValue(product.getName());
+
+      orderNode.add(productNode);
     }
   }
 
-  private void writePriceTo(StringBuffer xml, Product product) {
+  private void writePriceTo(TagNode productTg, Product product) {
     TagNode priceNode = new TagNode("price");
     priceNode.addAttribute("currency", currencyFor(product));
     priceNode.addValue(String.valueOf(product.getPrice()));
-    xml.append(priceNode.toString());
+    productTg.add(priceNode);
   }
 
   private String currencyFor(Product product) {
@@ -68,6 +62,5 @@ public class OrdersWriter {
   private String colorFor(Product product) {
     return "";
   }
-
 
 }

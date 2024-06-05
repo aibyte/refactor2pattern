@@ -1,10 +1,14 @@
 package com.aibyte.arch.pattern.simplify.composite;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class TagNode {
 
   private final String name;
   private StringBuffer attributes;
   private String value = "";
+  private List<TagNode> children = new ArrayList<>();
 
   public TagNode(String name) {
     this.name = name;
@@ -24,8 +28,14 @@ public class TagNode {
     this.value = value;
   }
 
+  public void add(TagNode child) {
+    children.add(child);
+  }
+
   @Override
   public String toString() {
-    return "<" + name + attributes +">"+value+"</" + name + ">";
+    return "<" + name + attributes + ">"
+        + children.stream().map(TagNode::toString).reduce("", (a, b) -> a + b)
+        + value + "</" + name + ">";
   }
 }
