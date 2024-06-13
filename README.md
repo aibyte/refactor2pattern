@@ -8,4 +8,4 @@ A sample project to demonstrate the refactoring of a set of codebase to pattern.
   * [Compose Method - List](src/main/java/com/aibyte/arch/pattern/simplify/compose/List.java)
   * [Use composite to replace Implicit Tree - OrdersWriter](src/main/java/com/aibyte/arch/pattern/simplify/composite/OrdersWriter.java)
 * Generalization
-  * [Use Interpreter to replace Implicit Language - ProductFinder](src/main/java/com/aibyte/arch/pattern/simplify/interpreter/ProductFinder.java)
+  * [Use Interpreter to replace Implicit Language - ProductFinder](src/main/java/com/aibyte/arch/pattern/generalization/interpreter/ProductFinder.java)
