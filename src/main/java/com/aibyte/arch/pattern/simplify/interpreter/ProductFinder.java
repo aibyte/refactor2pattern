@@ -14,76 +14,51 @@ public class ProductFinder {
   }
 
   public List<Product> byColor(Color color) {
-    List<Product> foundProducts = new ArrayList<>();
-    Iterator<Product> products = repository.iterator();
-    while (products.hasNext()) {
-      Product product = products.next();
-      if (product.getColor().equals(color)) {
-        foundProducts.add(product);
-      }
-    }
-
-    return foundProducts;
+    ColorSpec colorSpec = new ColorSpec(color);
+    return selectBy(colorSpec);
   }
 
   public List<Product> byPrice(float price) {
-    List<Product> foundProducts = new ArrayList<>();
-    Iterator<Product> products = repository.iterator();
-    while (products.hasNext()) {
-      Product product = products.next();
-      if (product.getPrice() == price) {
-        foundProducts.add(product);
-      }
-    }
-    return foundProducts;
-  }
-
-  public List<Product> byColorSizeAndBelowPrice(Color color, ProductSize productSize, float price) {
-    List<Product> foundProducts = new ArrayList<>();
-    Iterator<Product> iterator = repository.iterator();
-    while (iterator.hasNext()) {
-      Product product = iterator.next();
-      if (product.getColor().equals(color) && product.getProductSize().equals(productSize)
-          && product.getPrice() < price) {
-        foundProducts.add(product);
-      }
-    }
-    return foundProducts;
-  }
-
-  public List<Product> belowPriceAvoidColor(float price, Color color) {
-    List<Product> foundProducts = new ArrayList<>();
-    Iterator<Product> iterator = repository.iterator();
-    while (iterator.hasNext()) {
-      Product product = iterator.next();
-      if (product.getPrice() < price && !product.getColor().equals(color)) {
-        foundProducts.add(product);
-      }
-    }
-    return foundProducts;
+    PriceSpec priceSpec = new PriceSpec(price);
+    return selectBy(priceSpec);
   }
 
   public List<Product> byCode(String code) {
+    CodeSpec codeSpec = new CodeSpec(code);
+    return selectBy(codeSpec);
+  }
+
+  public List<Product> byName(String name) {
+    NameSpec nameSpec = new NameSpec(name);
+    return selectBy(nameSpec);
+  }
+
+  public List<Product> byColorSizeAndBelowPrice(Color color, ProductSize productSize, float price) {
+
+    AndSpec andSpec = new AndSpec(
+        new AndSpec(new ColorSpec(color), new ProductSizeSpec(productSize)),
+        new BelowPriceSpec(price));
+
+    return selectBy(andSpec);
+  }
+
+  public List<Product> belowPriceAvoidColor(float price, Color color) {
+    AndSpec andSpec = new AndSpec(
+        new BelowPriceSpec(price),
+        new NotSpec(new ColorSpec(color)));
+    return selectBy(andSpec);
+  }
+
+  private List<Product> selectBy(Spec spec) {
     List<Product> foundProducts = new ArrayList<>();
     Iterator<Product> iterator = repository.iterator();
     while (iterator.hasNext()) {
       Product product = iterator.next();
-      if (product.getCode().equals(code)) {
+      if (spec.isSatisfiedBy(product)) {
         foundProducts.add(product);
       }
     }
     return foundProducts;
   }
 
-  public List<Product> byName(String name) {
-    List<Product> foundProducts = new ArrayList<>();
-    Iterator<Product> iterator = repository.iterator();
-    while (iterator.hasNext()) {
-      Product product = iterator.next();
-      if (product.getName().equals(name)) {
-        foundProducts.add(product);
-      }
-    }
-    return foundProducts;
-  }
 }

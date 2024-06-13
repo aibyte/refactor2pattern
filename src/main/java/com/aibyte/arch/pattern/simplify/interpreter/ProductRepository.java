@@ -6,7 +6,7 @@ import java.util.List;
 
 public class ProductRepository {
 
-  private List<Product> products = new ArrayList<>();
+  private final List<Product> products = new ArrayList<>();
 
   public Iterator<Product> iterator() {
     return products.iterator();

@@ -9,14 +9,14 @@ import org.junit.jupiter.api.Test;
 class ProductRepositoryTest {
 
   private ProductRepository repository;
-  private Product fireTruck = new Product("f1234", "Fire Truck", Color.red, 8.95f,
+  private final Product fireTruck = new Product("f1234", "Fire Truck", Color.red, 8.95f,
       ProductSize.MEDIUM);
-  private Product barbieClassic = new Product("b7654", "Barbie Classic", Color.yellow, 15.95f,
+  private final Product barbieClassic = new Product("b7654", "Barbie Classic", Color.yellow, 15.95f,
       ProductSize.SMALL);
-  private Product frisbee = new Product("f4321", "Frisbee", Color.pink, 9.99f, ProductSize.LARGE);
-  private Product baseball = new Product("b2343", "Baseball", Color.white, 8.95f,
+  private final Product frisbee = new Product("f4321", "Frisbee", Color.pink, 9.99f, ProductSize.LARGE);
+  private final Product baseball = new Product("b2343", "Baseball", Color.white, 8.95f,
       ProductSize.NOT_APPLICABLE);
-  private Product toyPorsche = new Product("p1112", "Toy Porsche", Color.red, 230.00f,
+  private final Product toyPorsche = new Product("p1112", "Toy Porsche", Color.red, 230.00f,
       ProductSize.NOT_APPLICABLE);
 
   @BeforeEach

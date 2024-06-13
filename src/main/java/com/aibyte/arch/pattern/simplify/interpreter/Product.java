@@ -4,11 +4,11 @@ import java.awt.Color;
 
 public class Product {
 
-  private String code;
-  private String name;
-  private Color color;
-  private float price;
-  private ProductSize productSize;
+  private final String code;
+  private final String name;
+  private final Color color;
+  private final float price;
+  private final ProductSize productSize;
 
   public Product(String code, String name, Color color, float price,
       ProductSize productSize) {
