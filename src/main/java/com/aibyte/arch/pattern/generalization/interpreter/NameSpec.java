@@ -1,4 +1,4 @@
-package com.aibyte.arch.pattern.simplify.interpreter;
+package com.aibyte.arch.pattern.generalization.interpreter;
 
 public class NameSpec extends Spec {
 
