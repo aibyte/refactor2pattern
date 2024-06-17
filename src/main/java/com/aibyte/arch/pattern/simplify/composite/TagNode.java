@@ -1,7 +1,6 @@
 package com.aibyte.arch.pattern.simplify.composite;
 
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 
 public class TagNode {
@@ -35,18 +34,38 @@ public class TagNode {
 
   @Override
   public String toString() {
-    String result = "";
-    result += "<" + name + attributes + ">";
-    Iterator<TagNode> it = children.iterator();
-    while (it.hasNext()) {
-      TagNode node = it.next();
-      result += node.toString();
-    }
+    StringBuffer result = new StringBuffer();
+    appendContentsTo(result);
+    return result.toString();
+  }
 
+  private void appendContentsTo(StringBuffer result) {
+    writeOpenTagTo(result);
+    writeChildrenTo(result);
+    writeValueTo(result);
+    writeCloseTagTo(result);
+  }
+
+  private void writeCloseTagTo(StringBuffer result) {
+    result.append("</");
+    result.append(name);
+    result.append(">");
+  }
+
+  private void writeValueTo(StringBuffer result) {
     if (value != null && !value.isEmpty()) {
-      result += value;
+      result.append(value);
     }
-    result += "</" + name + ">";
-    return result;
+  }
+
+  private void writeChildrenTo(StringBuffer result) {
+    children.forEach(node -> node.appendContentsTo(result));
+  }
+
+  private void writeOpenTagTo(StringBuffer result) {
+    result.append("<");
+    result.append(name);
+    result.append(attributes);
+    result.append(">");
   }
 }
