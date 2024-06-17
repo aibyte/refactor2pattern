@@ -32,7 +32,7 @@ class OrdersWriterTest {
     OrdersWriter ordersWriter = new OrdersWriter(orders);
     String contents = ordersWriter.getContents();
     assertEquals(
-        "<orders><order id='-1'><product id='0' color='' size='0'><price currency=''>0.0</price>null</product></order></orders>",
+        "<orders><order id='-1'><product id='0' color='' size='0'><price currency=''>0.0</price></product></order></orders>",
         contents);
   }
 
@@ -44,7 +44,7 @@ class OrdersWriterTest {
     OrdersWriter ordersWriter = new OrdersWriter(orders);
     String contents = ordersWriter.getContents();
     assertEquals(
-        "<orders><order id='-1'><product id='0' color='' size='0'><price currency=''>100.0</price>null</product></order></orders>",
+        "<orders><order id='-1'><product id='0' color='' size='0'><price currency=''>100.0</price></product></order></orders>",
         contents);
   }
 
@@ -69,7 +69,7 @@ class OrdersWriterTest {
     OrdersWriter ordersWriter = new OrdersWriter(orders);
     String contents = ordersWriter.getContents();
     assertEquals(
-        "<orders><order id='-1'><product id='0' color='' size='0'><price currency=''>100.0</price>null</product><product id='0' color='' size='0'><price currency=''>200.0</price>null</product></order></orders>",
+        "<orders><order id='-1'><product id='0' color='' size='0'><price currency=''>100.0</price></product><product id='0' color='' size='0'><price currency=''>200.0</price></product></order></orders>",
         contents);
   }
 
